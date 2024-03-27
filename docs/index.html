@@ -1,0 +1,124 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>jimnist</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link href="css/screen.css" media="screen, projection" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="js/protovis-r3.2.js"></script>
+    <script type="text/javascript" src="js/pixels.js"></script>
+</head>
+<body class="bp">
+<!-- gh -->
+<div id="smiley" class="contento">
+    <script type="text/javascript+protovis">
+
+var w = 400,
+    h = 400,
+    x = pv.Scale.linear(0, 19).range(0, w),
+    y = pv.Scale.linear(0, 19).range(0, h),
+    half_pixel = x(1) / 2,
+    left_x_bump = x(4) + half_pixel,   /* used for eyes */
+    right_x_bump = x(12) + half_pixel, /* used for eyes */
+    y_bump = y(6) + half_pixel,        /* used for eyes */
+    pixel_size = 101;
+
+var vis = new pv.Panel()
+    .width(w)
+    .height(h)
+    .bottom(11)
+    .left(33)
+    .right(11)
+    .top(33);
+
+// yellow smiley stuffs
+vis.add(pv.Panel)
+    .data(yellows)
+  .add(pv.Dot)
+    .left(function(d) x(d.x))
+    .top(function(d) y(d.y))
+    .size(pixel_size)
+    .fillStyle(function(d) d.c)
+    .lineWidth(0)
+    .antialias(false)
+    .shape("square");
+
+vis.add(pv.Panel)
+  .add(pv.Image)
+    .url("img/big_jim.png")
+    .height(55)
+    .width(205)
+    .top(248)
+    .left(87)
+    .title("jimnist");
+
+// left eye
+leye = vis.add(pv.Panel)
+  .left(x(3) + half_pixel)
+  .top(y(5) + half_pixel)
+  .height(y(3))
+  .width(x(3))
+    .data(lefts)
+  .add(pv.Dot)
+    .left(function(d) x(d.x) + half_pixel)
+    .top(function(d) y(d.y)  + half_pixel)
+    .size(pixel_size)
+    .fillStyle(function(d) d.c)
+    .lineWidth(0)
+    .antialias(false)
+    .shape("square");
+
+// left eye background
+//leye.add
+
+// left eye ball
+leye.add(pv.Dot)
+      .def("v", function(d) {
+        var m = this.mouse();
+        return ((m.length() > x(1)) ? m.norm().times(x(1)) : m).plus(x(1.5), y(1.5));
+      })
+      .left(function(d) this.v().x)
+      .top(function(d) this.v().y)
+      .fillStyle("#551f00")
+      .size(pixel_size * 1.5)
+      .lineWidth(0)
+      .antialias(false)
+      .shape("square");
+
+// right eye
+reye = vis.add(pv.Panel)
+      .left(x(11) + half_pixel)
+      .top(y(5) + half_pixel)
+      .height(y(3))
+      .width(x(3))
+        .data(rights)
+      .add(pv.Dot)
+        .left(function(d) x(d.x) + half_pixel)
+        .top(function(d) y(d.y)  + half_pixel)
+        .size(pixel_size)
+        .fillStyle(function(d) d.c)
+        .lineWidth(0)
+        .antialias(false)
+        .shape("square");
+
+    reye.add(pv.Dot)
+      .def("v", function(d) {
+        var m = this.mouse();
+        return ((m.length() > x(1)) ? m.norm().times(x(1)) : m).plus(x(1.5), y(1.5));
+      })
+      .left(function(d) this.v().x)
+      .top(function(d) this.v().y)
+      .fillStyle("#7f1f00")
+      .size(pixel_size * 1.5)
+      .lineWidth(0)
+      .antialias(false)
+      .shape("square");
+
+vis.render();
+pv.listen(self, "mousemove", function() vis.render());
+    </script>
+</div>
+
+</body>
+</html>
