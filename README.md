@@ -12,3 +12,4 @@ push to main
 
 ## TODO
 - [ ] GA
+- [ ] is this really a jekyll site?
