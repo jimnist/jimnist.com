@@ -1,6 +1,4 @@
-# jimnist.com, yo
-
-now using github pages
+# jimnist.com
 
 ## local dev
 ```
@@ -9,7 +7,7 @@ bundle exec jekyll serve
 ```
 
 ## deploying
-push to master
+push to main
 
 
 ## TODO
